@@ -33,7 +33,7 @@ function setup() {
 	let special = [open, close, fire];
 	
 	//new object for the "Display"
-	Disp = new Display(w*.1, h*.465, w*.8, h*.28)
+	Disp = new Display(w*.1, h*.465, w*.8, h*.28);
 }
 
 //Class for the Buttons of the elevator
@@ -58,7 +58,7 @@ function setup() {
   }
 
 //Class for the use of the display
-  class Display {
+	class Display {
 	  constructor(x1,x2,x3,x4){
 		  this.x1 = x1;
 		  this.x2 = x2;
@@ -68,14 +68,16 @@ function setup() {
 
 	  show(){
 		strokeWeight(1);
+		fill(25);
 		rect(this.x1, this.x2, this.x3, this.x4);
+		
 	  }
 
   }
 
 function draw(){
 
-	background(135);
+	background(115);
 	
 	one.show();
 	two.show();
@@ -85,7 +87,6 @@ function draw(){
 	six.show();
 	Disp.show();
 
-
 	// textSize(150);
 	// textAlign(CENTER);
 	// text(3, w*.5, height*.675);
@@ -93,19 +94,16 @@ function draw(){
 
 }
 
-function changeButtonColor(){
-	var val = 140;
-	background(val);
-}
+// function changeButtonColor(){
+// 	var val = 140;
+// 	background(val);
+// }
 
 function mousePressed() {
-	// Check if mouse is inside the circle
-	let d = dist(mouseX, mouseY,w*.2, h*.15);
-	if (d < 100) {
-	  // Pick new random color values
-	// textSize(150);
-	// textAlign(CENTER);
-	text(3, w*.5, height*.675);
-	fill(2);	
+	// Check if mouse is inside any of the 6 buttons that are numbered
+	for(i = 0; i<6; i++){
+		if (int(dist(mouseX, mouseY, butttons[i].x, buttons[i].y)) < 100) {
+			fill(255);
+		}
 	}
   }
