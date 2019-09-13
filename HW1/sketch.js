@@ -1,4 +1,4 @@
-let floor = [];
+let floors = [];
 let Buttons = [];
 //preloading function that load all files from assets folder
 
@@ -23,7 +23,7 @@ function setup(){
 		Buttons[i] = new numButtons(xofNums[i], yofNums[i], String(i+1));
 	}
 
-	//Initializing the special button objects as an array
+	//Initializing the special button objects into an array
 	Buttons[6] = new numButtons(xofNums[6], yofNums[6], String(words[0]), 38, 48, 12);
 	Buttons[7] = new numButtons(xofNums[7], yofNums[7], String(words[1]), 38, 29, 12);
 	Buttons[8] = new numButtons(xofNums[8], yofNums[8], String(words[2]), 38, 49, 12);
@@ -46,28 +46,23 @@ function setup(){
 		this.size = size || 62;
 		this.minusX = minusX || 18;
 		this.plusY = plusY || 19;
+
+		this.color1 = 255;
+		this.color2 = 255;
+		this.color3 = 255;
+
 	}
 
 	//show method that allows the object to be seen
 	show(){
 		strokeWeight(4);
-		fill(255);//fill of the circle
-		circle(this.x, this.y, this.d);
+		fill(this.color1,this.color2,this.color3);//fill of the circle
+		ellipse(this.x, this.y, this.d, this.d);
 		fill(0);//font color
 		textSize(this.size);//text size
 		text(this.label, this.x-this.minusX, this.y+this.plusY); //location	
 	}
 
-	//For when the button gets pressed
-	press(){
-		strokeWeight(4);
-		fill(158, 21, 21);
-		circle(this.x, this.y, this.d);
-		fill(0);
-		textSize(20);
-		text(this.label, this.x-18, this.y+19);
-		//user feedback here
-	}
   }
 
 //////////////////////////////////////////
@@ -81,6 +76,8 @@ class Display {
 	  }
 
 	  show(){
+		// textSize(90);
+		// text('⇩',100,400);
 		strokeWeight(1);
 		fill(50);
 		rect(this.x1, this.x2, this.x3, this.x4);
@@ -102,20 +99,20 @@ function draw(){
 
 //Implement the following two functions to create button effect / userfeedback
 function mousePressed() {
-	text(Buttons[i].y, 100,100);
+	
 	for (let i = 0; i < 9; i++) {
 		d = dist(mouseX, mouseY, Buttons[i].x, Buttons[i].y);
 		//if mouse click is within one of the buttons
 		if (d < 57.5) { 
-			Buttons[i].press();
-			// floors.push(i);
-			// ElevatorLogic();
-			//setTimeout(function(){ alert("Hello"); }, 3000); for sounds and other things 
+		 Buttons[i].color1 = 255;
+		 Buttons[i].color2 = 255;
+		 Buttons[i].color3 = 51;
+		 floors.push(Buttons[i].label);
 		}
 	}
-	//initiate user feedback here
+	
   }
-//////////////////////////////////////////
+/////////////////////////////////////////
 
 function ElevatorLogic(){
 	 //go towards that floor and at some point let the button go back to white
