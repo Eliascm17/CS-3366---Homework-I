@@ -1,4 +1,4 @@
-let floor;
+let floor = [];
 let Buttons = [];
 //preloading function that load all files from assets folder
 
@@ -9,40 +9,43 @@ function setup(){
 	createCanvas(550, 800);
 
 	//reassigning variables to make writing code easier
-	floors = [];
 	let diam = 115;
 	let w = width;
 	let h = height;
 
 	//arrays for x & y values of the button numbers 1-6 on the interface
-	let xofNums = [w * .20, w * .50, w * .80, w * .20, w * .50, w * .80];
+	let xofNums = [w * .20, w * .50, w * .80, w * .20, w * .50, w * .80, w * .20, w * .50, w * .80];
 	let yofNums = [h * .17, h * .17, h * .17, h * .37, h * .37, h * .37, h * .87, h * .87, h * .87];
-	let words = ['Open','Close','911'];
+	let words = ['Open','911','Close'];
 
 	//Initializing the number button objects as an array
 	for(let i = 0; i < 6; i++){
-		Buttons[i] = new numButtons(xofNums[i], yofNums[i], i+1);
+		Buttons[i] = new numButtons(xofNums[i], yofNums[i], String(i+1));
 	}
 
 	//Initializing the special button objects as an array
-	// for(let i = 6; i<9; i++){
-	// 	Buttons[i] = new numButtons(xofNums[i], yofNums[i], words[i]);
-	// }
+	Buttons[6] = new numButtons(xofNums[6], yofNums[6], String(words[0]), 38, 48, 12);
+	Buttons[7] = new numButtons(xofNums[7], yofNums[7], String(words[1]), 38, 29, 12);
+	Buttons[8] = new numButtons(xofNums[8], yofNums[8], String(words[2]), 38, 49, 12);
 
-	//new instance for the Display
-	// Disp = new Display(w*.1, h*.465, w*.8, h*.28);
+
+	//new instance for the Display to give userfeedback
+	Disp = new Display(w*.1, h*.48, w*.8, h*.28);
 } 
 
 //////////////////////////////////////////
 //Class for the Buttons with numbers in the elevator
   class numButtons {
 	//basic class constructor for each button
-	constructor(x,y,label){
+	constructor(x,y,label,size, minusX, plusY){
 		this.x = x;
 		this.y = y;
 		this.d = 115;
 		this.label = label;
 		this.alpha = 255;
+		this.size = size || 62;
+		this.minusX = minusX || 18;
+		this.plusY = plusY || 19;
 	}
 
 	//show method that allows the object to be seen
@@ -51,8 +54,8 @@ function setup(){
 		fill(255);//fill of the circle
 		circle(this.x, this.y, this.d);
 		fill(0);//font color
-		textSize(62);//text size
-		text(this.label, this.x-18, this.y+19); //location	
+		textSize(this.size);//text size
+		text(this.label, this.x-this.minusX, this.y+this.plusY); //location	
 	}
 
 	//For when the button gets pressed
@@ -61,33 +64,12 @@ function setup(){
 		fill(158, 21, 21);
 		circle(this.x, this.y, this.d);
 		fill(0);
-		textSize(62);
+		textSize(20);
 		text(this.label, this.x-18, this.y+19);
 		//user feedback here
 	}
   }
 
-//////////////////////////////////////////
-//Class for the buttons that aren't numbers i.e. open, close, emergency
-class specButtons {
-	//basic class constructor for each button
-	constructor(x, y, d, label) {
-		this.x = x;
-		this.y = y;
-		this.d = d;
-		this.label = label;
-		this.alpha = 255;
-	}
-	//show method that allows the object to be seen	
-	show() {
-		// strokeWeight(3);
-		fill(255, this.alpha);
-		circle(this.x, this.y, this.d);
-		fill(0);
-		text(this.label, this.x - 13, this.y + 13);
-		fill(0);
-	}
-}
 //////////////////////////////////////////
 //Class for the use of the display to give easy to understand information to the user
 class Display {
@@ -100,7 +82,7 @@ class Display {
 
 	  show(){
 		strokeWeight(1);
-		fill(25);
+		fill(50);
 		rect(this.x1, this.x2, this.x3, this.x4);
 	  }
 
@@ -111,19 +93,20 @@ class Display {
 function draw(){
 	background(130);
 	//displaying numbered buttons
-	for (let i = 0; i < 6; i++){
+	for (let i = 0; i < 9; i++){
 		Buttons[i].show();
 	}
+	//displaying the display
+	Disp.show();
 }
 
 //Implement the following two functions to create button effect / userfeedback
 function mousePressed() {
 	text(Buttons[i].y, 100,100);
-	for (let i = 0; i < 6; i++) {
+	for (let i = 0; i < 9; i++) {
 		d = dist(mouseX, mouseY, Buttons[i].x, Buttons[i].y);
 		//if mouse click is within one of the buttons
 		if (d < 57.5) { 
-			text(d, 100,100);
 			Buttons[i].press();
 			// floors.push(i);
 			// ElevatorLogic();
