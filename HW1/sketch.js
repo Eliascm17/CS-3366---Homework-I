@@ -1,6 +1,17 @@
 let floors = [];
 let Buttons = [];
+var arrow, buttonPressMP3;
 //preloading function that load all files from assets folder
+function preload(){
+	soundFormats('mp3');
+	ascendingMP3 = loadSound('assets/Elev_ascending.mp3')
+	buttonPressMP3 = loadSound('assets/buttonPress.mp3');
+	OpenMP3 = loadSound('assets/Open.mp3');
+	SirenMP3 = loadSound('assets/Siren.mp3');
+
+	arrow = loadImage('assets/arrow.png');
+	arrowdown = loadImage('assets/arrowdown.png');
+}
 
 //////////////////////////////////////////
 //Setup function that runs once
@@ -77,10 +88,19 @@ class Display {
 
 	  show(){
 		// textSize(90);
-		// text('⇩',100,400);
 		strokeWeight(1);
 		fill(50);
 		rect(this.x1, this.x2, this.x3, this.x4);
+		// image(arrow, 310, 395, 200,200);		
+		// image(arrowdown, 40, 395, 200,200);
+	  }
+	  up(){
+		image(arrow, 40, 395, 200,200);
+		ascendingMP3.play();
+	  }
+	  down(){
+		image(arrowdown, 510, 395, 200,200);
+		ascendingMP3.play();
 	  }
 
   }
@@ -95,6 +115,8 @@ function draw(){
 	}
 	//displaying the display
 	Disp.show();
+	// Disp.up();
+	// Disp.down();
 }
 
 //Implement the following two functions to create button effect / userfeedback
@@ -104,10 +126,20 @@ function mousePressed() {
 		d = dist(mouseX, mouseY, Buttons[i].x, Buttons[i].y);
 		//if mouse click is within one of the buttons
 		if (d < 57.5) { 
-		 Buttons[i].color1 = 255;
-		 Buttons[i].color2 = 255;
-		 Buttons[i].color3 = 51;
+			Buttons[i].color1 = 255;
+		 	Buttons[i].color2 = 255;
+		 	Buttons[i].color3 = 51;
+		 if (Buttons[i].label == '911'){
+			SirenMP3.play();
+		 }
+		 if (Buttons[i].label == 'Open' || Buttons[i].label == 'Close'){
+			OpenMP3.play();
+		 }
 		 floors.push(Buttons[i].label);
+		 buttonPressMP3.play();
+		//  Buttons[i].color1 = 255;
+		//  Buttons[i].color2 = 255;
+		//  Buttons[i].color3 = 51;
 		}
 	}
 	
