@@ -84,13 +84,17 @@ class Display {
 		  this.x2 = x2;
 		  this.x3 = x3;
 		  this.x4 = x4;
+		  this.floorLevel = 1;
 	  }
 
 	  show(){
-		// textSize(90);
 		strokeWeight(1);
 		fill(50);
 		rect(this.x1, this.x2, this.x3, this.x4);
+		strokeWeight(100);
+		fill(255);
+		textSize(150);
+		text(this.floorLevel, width/2-35, 540);
 		// image(arrow, 310, 395, 200,200);		
 		// image(arrowdown, 40, 395, 200,200);
 	  }
@@ -115,8 +119,6 @@ function draw(){
 	}
 	//displaying the display
 	Disp.show();
-	// Disp.up();
-	// Disp.down();
 }
 
 //Implement the following two functions to create button effect / userfeedback
@@ -126,28 +128,44 @@ function mousePressed() {
 		d = dist(mouseX, mouseY, Buttons[i].x, Buttons[i].y);
 		//if mouse click is within one of the buttons
 		if (d < 57.5) { 
-			Buttons[i].color1 = 255;
-		 	Buttons[i].color2 = 255;
-		 	Buttons[i].color3 = 51;
+			
 		 if (Buttons[i].label == '911'){
+			changeColorYellow(i);
+			//Set timer here!
 			SirenMP3.play();
+			changeColorWhite(i);
 		 }
 		 if (Buttons[i].label == 'Open' || Buttons[i].label == 'Close'){
+			changeColorYellow(i);
+			//Set timer here!
 			OpenMP3.play();
+			changeColorWhite(i);
 		 }
-		 floors.push(Buttons[i].label);
+		 else{
+			 floors.push(Buttons[i].label);
+			 ElevatorLogic();
+		 }
 		 buttonPressMP3.play();
-		//  Buttons[i].color1 = 255;
-		//  Buttons[i].color2 = 255;
-		//  Buttons[i].color3 = 51;
 		}
 	}
 	
   }
 /////////////////////////////////////////
+function changeColorYellow(i){
+	Buttons[i].color1 = 255;
+	Buttons[i].color2 = 255;
+	Buttons[i].color3 = 51;
+}
+
+function changeColorWhite(i){
+	Buttons[i].color1 = 255;
+	Buttons[i].color2 = 255;
+	Buttons[i].color3 = 255;
+}
 
 function ElevatorLogic(){
 	 //go towards that floor and at some point let the button go back to white
+	 //the Default 
 }
 
 
