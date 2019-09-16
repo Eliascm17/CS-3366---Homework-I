@@ -1,4 +1,4 @@
-# CS-3366---Homework-I: Elevator Interface with the P5 Library
+# CS-3366---Homework-I: Elevator Interface with P5.js
 
 ![Elevator gif](https://github.com/Eliascm17/CS-3366---Homework-I/blob/master/Elevator.gif)
 
