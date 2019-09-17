@@ -85,7 +85,7 @@ class Display {
 		  this.x2 = x2;
 		  this.x3 = x3;
 		  this.x4 = x4;
-		  this.floorLevel = 1;
+		  this.floorLevel = 4;
 	  }
 	  //showing of the rectangle
 	  show(){
@@ -149,9 +149,15 @@ function mousePressed() {
 		 }
 		 //when a number is pushed
 		 else{
-			changeColorYellow(i);
-			floors.push(parseInt(Buttons[i].label));
-			ElevatorLogic();
+			if(Button[i].label != Disp.floorLevel){
+				//don't let the button stay yellow
+			}
+			// else{
+			// 	changeColorYellow(i);
+			// 	floors.push(parseInt(Buttons[i].label));
+			// 	ElevatorLogic();
+			// }
+		
 		 }
 		 buttonPressMP3.play();
 		}
@@ -160,7 +166,17 @@ function mousePressed() {
 }
   
 function ElevatorLogic(){
-	floors.sort()
+	up = floors.sort() // Ex:[1,3,5,6]
+	down = floors.sort().reverse(); //Ex:[6,5,3,1]
+	eachLevel = [1,2,3,4,5,6];
+
+	//wrap this in a while true loop of some kind
+	if(Disp.floorLevel){
+
+	}
+	else{
+
+	}
 
 }
 
