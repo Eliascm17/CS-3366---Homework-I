@@ -1,14 +1,18 @@
 let floors = [];
 let Buttons = [];
-var arrow, buttonPressMP3;
+var arrow, arrowdown, buttonPressMP3, OpenMP3, SirenMP3, ascendingMP3, DingMP3;
+
 //preloading function that load all files from assets folder
 function preload(){
+	//all sound user feedback sound bites
 	soundFormats('mp3');
-	ascendingMP3 = loadSound('assets/Elev_ascending.mp3')
+	ascendingMP3 = loadSound('assets/Elev_ascending.mp3');
 	buttonPressMP3 = loadSound('assets/buttonPress.mp3');
 	OpenMP3 = loadSound('assets/Open.mp3');
 	SirenMP3 = loadSound('assets/Siren.mp3');
+	DingMP3 = loadSound('assets/Ding.mp3');
 
+	//arrows for visual fedback
 	arrow = loadImage('assets/arrow.png');
 	arrowdown = loadImage('assets/arrowdown.png');
 }
@@ -39,7 +43,6 @@ function setup(){
 	Buttons[7] = new numButtons(xofNums[7], yofNums[7], String(words[1]), 38, 29, 12);
 	Buttons[8] = new numButtons(xofNums[8], yofNums[8], String(words[2]), 38, 49, 12);
 
-
 	//new instance for the Display to give userfeedback
 	Disp = new Display(w*.1, h*.48, w*.8, h*.28);
 } 
@@ -57,16 +60,14 @@ function setup(){
 		this.size = size || 62;
 		this.minusX = minusX || 18;
 		this.plusY = plusY || 19;
-
 		this.color1 = 255;
 		this.color2 = 255;
 		this.color3 = 255;
-
 	}
 
 	//show method that allows the object to be seen
 	show(){
-		strokeWeight(4);
+		strokeWeight(4);//perim of circle
 		fill(this.color1,this.color2,this.color3);//fill of the circle
 		ellipse(this.x, this.y, this.d, this.d);
 		fill(0);//font color
@@ -86,7 +87,7 @@ class Display {
 		  this.x4 = x4;
 		  this.floorLevel = 1;
 	  }
-
+	  //showing of the rectangle
 	  show(){
 		strokeWeight(1);
 		fill(50);
@@ -94,22 +95,22 @@ class Display {
 		strokeWeight(100);
 		fill(255);
 		textSize(150);
-		text(this.floorLevel, width/2-35, 540);
-		// image(arrow, 310, 395, 200,200);		
-		// image(arrowdown, 40, 395, 200,200);
+		text(this.floorLevel, width/2-35, 540);	
 	  }
+	  //up arrow
 	  up(){
 		image(arrow, 40, 395, 200,200);
 		ascendingMP3.play();
 	  }
+	  //down arrow
 	  down(){
-		image(arrowdown, 510, 395, 200,200);
+		image(arrowdown, 310, 395, 200,200);
 		ascendingMP3.play();
 	  }
 
   }
-//////////////////////////////////////////
 
+//////////////////////////////////////////
 //draw function that runs infinitely at every frame
 function draw(){
 	background(130);
@@ -128,44 +129,54 @@ function mousePressed() {
 		d = dist(mouseX, mouseY, Buttons[i].x, Buttons[i].y);
 		//if mouse click is within one of the buttons
 		if (d < 57.5) { 
-			
+		//when the button 911 is pushed
 		 if (Buttons[i].label == '911'){
 			changeColorYellow(i);
 			//Set timer here!
 			SirenMP3.play();
-			changeColorWhite(i);
+			setTimeout(function (){
+				changeColorWhite(i);
+			}, 4000);
 		 }
+		 //when open or closed is pushed
 		 if (Buttons[i].label == 'Open' || Buttons[i].label == 'Close'){
 			changeColorYellow(i);
 			//Set timer here!
-			OpenMP3.play();
-			changeColorWhite(i);
+			setTimeout(function (){
+				OpenMP3.play();
+				changeColorWhite(i);
+			}, 4000);
 		 }
+		 //when a number is pushed
 		 else{
-			 floors.push(Buttons[i].label);
-			 ElevatorLogic();
+			changeColorYellow(i);
+			floors.push(parseInt(Buttons[i].label));
+			ElevatorLogic();
 		 }
 		 buttonPressMP3.play();
 		}
 	}
 	
-  }
-/////////////////////////////////////////
+}
+  
+function ElevatorLogic(){
+	floors.sort()
+
+}
+
+//change button colors to yellow
 function changeColorYellow(i){
 	Buttons[i].color1 = 255;
 	Buttons[i].color2 = 255;
 	Buttons[i].color3 = 51;
 }
 
+//change button colors to white
 function changeColorWhite(i){
 	Buttons[i].color1 = 255;
 	Buttons[i].color2 = 255;
 	Buttons[i].color3 = 255;
 }
 
-function ElevatorLogic(){
-	 //go towards that floor and at some point let the button go back to white
-	 //the Default 
-}
 
 
