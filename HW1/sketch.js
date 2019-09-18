@@ -1,6 +1,6 @@
 let floors = [];
 let Buttons = [];
-var arrow, arrowdown, buttonPressMP3, OpenMP3, SirenMP3, ascendingMP3, DingMP3;
+var arrow, arrowdown, buttonPressMP3, OpenMP3, SirenMP3, ascendingMP3, DingMP3, PushButton, DoorsOpen;
 
 //preloading function that load all files from assets folder
 function preload(){
@@ -20,6 +20,8 @@ function preload(){
 //////////////////////////////////////////
 //Setup function that runs once
 function setup(){
+	PushButton = true;
+	DoorsOpen = true;
 	//canvas initialization
 	createCanvas(550, 800);
 
@@ -85,7 +87,7 @@ class Display {
 		  this.x2 = x2;
 		  this.x3 = x3;
 		  this.x4 = x4;
-		  this.floorLevel = 4;
+		  this.floorLevel = 1;
 	  }
 	  //showing of the rectangle
 	  show(){
@@ -106,6 +108,7 @@ class Display {
 	  down(){
 		image(arrowdown, 310, 395, 200,200);
 		ascendingMP3.play();
+	
 	  }
 
   }
@@ -130,7 +133,7 @@ function mousePressed() {
 		//if mouse click is within one of the buttons
 		if (d < 57.5) { 
 		//when the button 911 is pushed
-		 if (Buttons[i].label == '911'){
+		 if (Buttons[i].label == '911' && PushButton == true){
 			changeColorYellow(i);
 			//Set timer here!
 			SirenMP3.play();
@@ -139,25 +142,54 @@ function mousePressed() {
 			}, 4000);
 		 }
 		 //when open or closed is pushed
-		 if (Buttons[i].label == 'Open' || Buttons[i].label == 'Close'){
-			changeColorYellow(i);
-			//Set timer here!
-			setTimeout(function (){
-				OpenMP3.play();
-				changeColorWhite(i);
-			}, 4000);
+		 if ((Buttons[i].label == 'Open' || Buttons[i].label == 'Close') && PushButton == true){
+			if(Buttons[i].label == 'Open'){
+				//if doors are already open then nothing happens
+				if(DoorsOpen == true){
+					DingMP3.play();
+				}
+				//if they are closed then open them
+				else if(DoorsOpen != true){
+					DoorsOpen = true;
+					changeColorYellow(i);
+					//Set timer here!
+					setTimeout(function (){
+					OpenMP3.play();
+					changeColorWhite(i);
+					}, 4000);
+				}
+			}
+			else if(Buttons[i].label == 'Close'){
+					//if doors are already open then you may close them
+					if(DoorsOpen == true){
+						DoorsOpen = false;
+						changeColorYellow(i);
+						//Set timer here!
+						setTimeout(function (){
+						OpenMP3.play();
+						changeColorWhite(i);
+						}, 4000);
+					}
+					//if they are closed then do nothing
+					else if(DoorsOpen != true){
+						DingMP3.play();
+					}
+			}
+			
 		 }
 		 //when a number is pushed
 		 else{
-			if(Button[i].label != Disp.floorLevel){
-				//don't let the button stay yellow
+			 //if you are pressing a button that is equal to the level you're already on
+			if(parseInt(Buttons[i].label) == Disp.floorLevel){
+				DingMP3.play();
 			}
-			// else{
-			// 	changeColorYellow(i);
-			// 	floors.push(parseInt(Buttons[i].label));
-			// 	ElevatorLogic();
-			// }
-		
+			//if you press any other numbered button
+			else{
+				changeColorYellow(i);
+				floors.push(parseInt(Buttons[i].label));
+				buttonPressMP3.play();
+				ElevatorLogic();
+			}
 		 }
 		 buttonPressMP3.play();
 		}
@@ -166,17 +198,15 @@ function mousePressed() {
 }
   
 function ElevatorLogic(){
+	PushButton = False;
 	up = floors.sort() // Ex:[1,3,5,6]
 	down = floors.sort().reverse(); //Ex:[6,5,3,1]
 	eachLevel = [1,2,3,4,5,6];
 
 	//wrap this in a while true loop of some kind
-	if(Disp.floorLevel){
-
-	}
-	else{
-
-	}
+	// while (floors.length > 0){
+	// 	if 
+	// }
 
 }
 
