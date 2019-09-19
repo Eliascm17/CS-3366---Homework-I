@@ -9,7 +9,7 @@
 ## The reason it is bad is because the layout is not as good as it could be. While the funcitonality is there, the layout is not the best.
 
 
-### ------------------------------------------------------------------------------------------------------------
+### ------------------------------------------------------------------------------------------------
 # Part B:
 * List cases and rare cases:
   - Going all the way up
@@ -34,7 +34,7 @@
 <img src="https://github.com/Eliascm17/CS-3366---Homework-I/blob/master/Sketch1.png" width="350" height="600"/>
 <img src="https://github.com/Eliascm17/CS-3366---Homework-I/blob/master/Sketch2.png" width="350" height="600"/>
 
-### ------------------------------------------------------------------------------------------------------------
+### ------------------------------------------------------------------------------------------------
 # Part A:
 
 # [Here is my Elevator Demo!](https://eliascm17.github.io/CS3366-HW1---Demo/HW1/index.html, "Elevator Demo!")
