@@ -37,4 +37,4 @@
 ### ----------------------------------------------------------------
 # Part A:
 
-# [Here is my Elevator Demo!](https://eliascm17.github.io/CS3366-HW1---Demo/HW1/index.html, "Elevator Demo!")
+# [Here is my Elevator Demo!](https://eliascm17.github.io/CS3366-HW1---Demo/index.html "Elevator Demo!")
