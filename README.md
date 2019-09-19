@@ -4,11 +4,7 @@
 
 ![Elevator gif](https://github.com/Eliascm17/CS-3366---Homework-I/blob/master/Elevator.gif)
 
-<img src="https://github.com/Eliascm17/CS-3366---Homework-I/blob/master/Image1.jpg" width="300" height="529" />
-
-<img src="https://github.com/Eliascm17/CS-3366---Homework-I/blob/master/one.jpg"/>
-
-<img src="https://github.com/Eliascm17/CS-3366---Homework-I/blob/master/two.jpg"/>
+<img src="https://github.com/Eliascm17/CS-3366---Homework-I/blob/master/Image1.jpeg" width="300" height="529" />
 
 ## The reason it is bad is because the layout is not as good as it could be. While the funcitonality is there, the layout is not the best.
 
@@ -35,9 +31,10 @@
 * A common mistake when implementing your own design could be making it too complicated for any user to understand. More specifically mistakenly implementing sensory overload or not providing enough information for the user to go about using the interface. 
 
 ## My own implementation of an elevator's UI:
-
+<img src="https://github.com/Eliascm17/CS-3366---Homework-I/blob/master/Sketch1.png" width="350" height="600"/>
+<img src="https://github.com/Eliascm17/CS-3366---Homework-I/blob/master/Sketch2.png" width="350" height="600"/>
 
 ### ------------------------------------------------------------------------------------------------------------
 # Part A:
 
-# [Here is my Elevator Demo!](/HW1/index.html)
+# [Here is my Elevator Demo!](https://eliascm17.github.io/CS3366-HW1---Demo/HW1/index.html, "Elevator Demo!")
