@@ -108,7 +108,6 @@ class Display {
 	  down(){
 		image(arrowdown, 310, 395, 200,200);
 		ascendingMP3.play();
-	
 	  }
 
   }
@@ -132,7 +131,8 @@ function mousePressed() {
 		d = dist(mouseX, mouseY, Buttons[i].x, Buttons[i].y);
 		//if mouse click is within one of the buttons
 		if (d < 57.5) { 
-		//when the button 911 is pushed
+
+		//when the button 911 is pushed then sound the alarm
 		 if (Buttons[i].label == '911' && PushButton == true){
 			changeColorYellow(i);
 			//Set timer here!
@@ -141,6 +141,8 @@ function mousePressed() {
 				changeColorWhite(i);
 			}, 4000);
 		 }
+
+
 		 //when open or closed is pushed
 		 if ((Buttons[i].label == 'Open' || Buttons[i].label == 'Close') && PushButton == true){
 			if(Buttons[i].label == 'Open'){
@@ -177,12 +179,16 @@ function mousePressed() {
 			}
 			
 		 }
+
+
 		 //when a number is pushed
 		 else{
+
 			 //if you are pressing a button that is equal to the level you're already on
 			if(parseInt(Buttons[i].label) == Disp.floorLevel){
 				DingMP3.play();
 			}
+
 			//if you press any other numbered button
 			else{
 				changeColorYellow(i);
@@ -198,16 +204,51 @@ function mousePressed() {
 }
   
 function ElevatorLogic(){
-	PushButton = False;
-	up = floors.sort() // Ex:[1,3,5,6]
-	down = floors.sort().reverse(); //Ex:[6,5,3,1]
-	eachLevel = [1,2,3,4,5,6];
+	//while there are other floors to get to...
+	while (floors.length > 0){
+		//don't allow for buttons other than numbers to be pushed
+		PushButton = false;
+		var leastDistance = 100;
+		var Floorgoingto = 0;
+		//iteration compares the number on the display with the array of buttons pushed to find the least distance to another floor then goes to that floor
+		for (let i = 0;i < floors.length; i++){
+			if (Math.abs(Disp.floorLevel-floors[i]) < leastDistance){
+				leastDistance = Math.abs(Disp.floorLevel-floors[i]);
+				//set value to the floor we are going to next
+				Floorgoingto = floors[i];
+			}
+		}
 
-	//wrap this in a while true loop of some kind
-	// while (floors.length > 0){
-	// 	if 
-	// }
+		//then go to the floor of value: leastDistance
+		//leaving towards that next floor
 
+		//if the doors are open then close them and go to the next floor
+		if(DoorsOpen == true){
+			DoorsOpen = false; // become closed
+			OpenMP3.play();
+		}
+
+		//play sound of elevator moving
+		setTimeout(function (){
+			ascendingMP3.play();
+		},6100);
+
+		//on arrival play a ding to notify that you have arrived at floor X
+		setTimeout(function (){
+			DingMP3.play();
+			Disp.floorLevel = Floorgoingto;
+		},23000);
+
+		PushButton = true;
+
+		//now that we are at that level now, we can rid the value in the array and move on to the next floor
+		floors = removeValuefromIndex(floors, Floorgoingto);
+		//allow time for people to get out and other people to possibly push the close button if needed.
+		setTimeout(function (){}, 30500);
+
+		// setTimeout(function (){}, 29000);
+	}
+	PushButton = true;
 }
 
 //change button colors to yellow
@@ -224,5 +265,19 @@ function changeColorWhite(i){
 	Buttons[i].color3 = 255;
 }
 
+//remove value from an array and set the button to white that correlates to that value
+function removeValuefromIndex(arr, remove) {
+	for( var i = 0; i < arr.length; i++){ 
+		if ( arr[i] === remove) {
+			setTimeout(function (){
+				changeColorWhite(remove-1);
+			},15000);
+			console.log('array before: ' + arr);
+			arr.splice(i, 1); 
+			console.log('array after: ' + arr);
+			return arr;
+		}
+	 }
+}
 
 
